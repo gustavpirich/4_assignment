@@ -45,9 +45,10 @@ library(bayesplot)
 UNRATE <- read.csv("~/Library/Mobile Documents/com~apple~CloudDocs/Wirtschaftsuniversitaet/MASTER/Advanced Macroeconometrics/3_asssignment/UNRATE.csv")
 ```
 
+
 # Exercise 1 
 
-We investigate four different cases of \lambda_{1} and \lambda_{2} to investigate the sensitivity of the IRFS, predictions and the autoregressive coefficients to different prior parameters. Case 1 starts with arbitrarily large values for \lambda_{1} and \lambda_{2}, going down to case 4, where we set very small values for the hyperparameters. Note that we always keep the ordering that \lambda_{1} < \lambda_{2}, to account for the belief that the cross-variable lags are less informative than own variable lags. 
+We investigate four different cases of $\lambda_{1}$ and $\lambda_{2}$ to investigate the sensitivity of the IRFS, predictions and the autoregressive coefficients to different prior parameters. Case 1 starts with arbitrarily large values for $\lambda_{1}$ and $\lambda_{2}$, going down to case 4, where we set very small values for the hyperparameters. Note that we always keep the ordering that $\lambda_{1} < \lambda_{2}$, to account for the belief that the cross-variable lags are less informative than own variable lags. 
 
 ```{r, warning=FALSE, include =FALSE}
 rm(list=ls())
@@ -486,7 +487,7 @@ for(ii in 1:M){
 ```
 In case 1 the IRFs based on teh Cholesky decomposition resemble the typical behaviour we would expect. We focus on two particularly interesting IRFs, a monetary policy shock on inflation, unemployment. 
 
-\textbf{Case 2: (\lambda_{1} = 1 and \lambda_{2} = 3)}
+\textbf{Case 2: $(\lambda_{1} = 1$ and $\lambda_{2} = 3)$}
 
 ```{r, echo = FALSE}
 # Minnesota prior
@@ -788,7 +789,7 @@ for(ii in 1:M){
 ```
 
 
-\textbf{Case 3: \lambda_{1} = 0.1, and \lambda_{2} = 0.5}
+\textbf{Case 3: $\lambda_{1} = 0.1$, and $\lambda_{2} = 0.5$}
 
 ```{r, echo = FALSE}
 # Minnesota prior
@@ -1402,6 +1403,9 @@ Choosing smaller values for the $\lambda_{1}$, and controls the tightness of the
 *Description of exercise where we only vary one parameter and leave the other lambda the same*
 
 A suitable way to alleviate hyperparameter choices is to specify a prior distribution on the hyperparameters. One could specify a Gamma prior on plausible values for \lambda_{1} and \lambda_{2}. Then one could estimate the models with the package BVAR. 
+
+
+
 
 
 
