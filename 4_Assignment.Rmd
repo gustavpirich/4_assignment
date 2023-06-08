@@ -47,7 +47,7 @@ UNRATE <- read.csv("~/Library/Mobile Documents/com~apple~CloudDocs/Wirtschaftsun
 
 # Exercise 1 
 
-We investigate four different cases of $\lambda_{1}$ and $\lambda_{2}$ to investigate the sensitivity of the IRFs, predictions and the autoregressive coefficients to different prior parameters. Case 1 starts with extremely tight values for $\lambda_{1}$ and $\lambda_{2}$, up to case 3, where we set very high values for the hyperparamters. Note that we always keep the ordering that $\lambda_{1} < \lambda_{2}$, to account for the belief that the cross-variable lags are less informative than the own variable lags. 
+We investigate three different cases of $\lambda_{1}$ and $\lambda_{2}$ to investigate the sensitivity of the IRFs, predictions and the autoregressive coefficients to different prior parameters. Case 1 starts with extremely tight values for $\lambda_{1}$ and $\lambda_{2}$, up to case 3, where we set very high values for the hyperparamters. Note that we always keep the ordering that $\lambda_{1} < \lambda_{2}$, to account for the belief that the cross-variable lags are less informative than own variable lags. 
 
 ```{r, warning=FALSE, include =FALSE}
 rm(list=ls())
@@ -409,7 +409,12 @@ for(ii in 1:M){
   abline(v=seq(1,29), col="lightgrey", lty=2)
 }
 ```
-In case one we impose very agressive shrinkage to the variance of the autoregressive coefficients.
+In case one we impose very agressive shrinkage to the variance of the autoregressive coefficients. We can see that the coefficient for the first own lag amount to 0.993 while all other own or cross-variable coefficients shrink towards 0. Thus the use of such $\lambda_1$ and $\lambda_2$ induces a random walk behavior of the time series. 
+
+The impulse response functions are straight lines, reflecting the shrinkage towards random walks of the time series. A monetary policy shock has no statistically significant impact unemployement nor inflation. 
+
+We forecast a decrease in inflation. The unemployment rate should increase slightly at period t+1 and decrease in the following period. Concerning the forecast for the interest rate we observe a sharp decrease followed by a period of stability. 
+
 
 \textbf{Case 2: $(\lambda_{1} = 0.1$ and $\lambda_{2} = 0.5)$}
 
@@ -637,7 +642,11 @@ knitr::kable(AR_coef_Case_2, caption = "Case 2")
 ```
 
 
-In case 2, we use a plausible specification of 0.1 and 0.5. The IRFs show that the variables now influence each other more strongly, than in the case were we specified strong shrinkage. A monetary policy shock now has a clear positive impact on unemployement fading out after some months. 
+In case 2, we use a plausible specification of 0.1 and 0.5. The autoregressive coefficient show as in case one shrinkage towards 1 for the 1st own lag and 0 for all others. The shrinkage induced by a higher value of $\lambda_1$ and $\lambda_2$ is less stronger than in case one. We can also observe an increase in the range of the interval confidence. 
+
+The IRFs show that the variables now influence each other more strongly than in the case 1. The responses are faster pulled towards zero. The confidence intervals are tighter and the responses functiond are "curvier". A monetary policy shock now has a clear positive impact on unemployment fading out after some months. 
+
+The forecast can be similarly interpreted as in case one with higher magnitude than in case 1. 
 
 \newpage
 
@@ -863,18 +872,17 @@ row.names(AR_coef_Case_3) <- c(paste0(colnames(Y),"_1"), paste0(colnames(Y),"_2"
 
 knitr::kable(AR_coef_Case_3, caption = "Case 3")
 ```
-In case three we impose very little shrinkage. The IRFs now display a more volatile behaviour than in case one and two, reflecting the fact that the data has received a higher relative importance in the estimation fo the posteriors. 
+In case three we impose very little shrinkage. The conclusion drawn from case 3 are similar to those in case 2. The autoregressive coefficient are further way from 1 to 1st own lag and further away from 0 for all other. The interval confidence are also larger than in case 2.
 
-*Comparing IRFs based on Cholesky decomposition* \\
-The higher the values for the hyperparamters, the more volatile the impulse response functions are. In case one, were we impose extremely agressive shrinkage, the IRFs become straight lines. The estimated effect sizes are extremely small, to nonexistent. 
-In general, case two and three display very similar results.  
+The IRFs now display a more volatile behavior than in case one and two, reflecting the fact that the data has received a higher relative importance in the estimation of the posteriors. Finally, the forecasts are similar to the ones in case 1 and 2.
 
-If $\lambda_{1}$ is set to zero, then the VAR becomes a vector of univariate models. This accounts for the fact that in case 1, shocks only have a minor impact on the trajectory of other variables. If $\lambda_{1}$ goes to infinity, the data and conditional likelihood receive an increasingly higher relative importance for the response functions.  
+*Summary* 
 
-*Comparing IRFs based on Cholesky* \\
+The higher the values for the hyperparamters, the more volatile the impulse response functions are.
 
+If $\lambda_{1}$ is set to zero, then the VAR becomes a vector of univariate models. This accounts for the fact that in case 1, shocks only have small impacts on the trajectory of other variables. If $\lambda_{1}$ goes to infinity, the data and conditional likelihood receive an increasingly higher relative importance for the response functions.  
 
-A suitable way to alleviate hyperparameter choices is to specify a prior distribution on them. One could specify a Gamma prior on plausible values for $\lambda_{1}$ and $\lambda_{2}$. This could be implemented with the package BVAr in R. 
+A suitable way to alleviate hyperparameter choices is to specify a prior distribution on them. One could specify a Gamma prior on plausible values for $\lambda_{1}$ and $\lambda_{2}$. This could be implemented with the package BVAR in R. 
 
 
 # Exercise 2
